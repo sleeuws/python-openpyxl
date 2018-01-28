@@ -1,0 +1,34 @@
+import os
+import openpyxl
+
+os.chdir('/Users/stevenleeuws/Documents/timesheet')
+
+newfile = open('/Users/stevenleeuws/Documents/timesheet/final/NewFile.txt', 'w')
+
+for i in os.listdir():
+    if i.endswith('.txt'):
+        file = open(i)
+        for aline in file.readlines():
+            if aline.startswith('Period') or aline.startswith('Day') or aline.startswith('Standard'):
+                print(aline)
+                newfile.write(aline)
+        file.close()
+newfile.close()
+
+
+wb = openpyxl.Workbook()
+ws = wb.active
+
+newfile = open('/Users/stevenleeuws/Documents/timesheet/final/NewFile.txt', 'r')
+
+a=1
+
+for y in newfile.readlines():
+    ws['A1'] = y
+    
+    a+=1
+    print(a)
+    print(y)
+
+wb.save('new.xlxs')
+newfile.close()
